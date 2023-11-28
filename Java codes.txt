@@ -1,0 +1,42 @@
+package DDTesting;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.time.Duration;
+import org.apache.poi.EncryptedDocumentException;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+class Super
+{ 
+	static String Username;
+	static String Password;
+	public static void Parent() throws EncryptedDocumentException, IOException
+	{
+	FileInputStream Login = new FileInputStream
+			("C:\\\\Users\\\\ZAINAB KHAN\\\\eclipse-workspace\\\\ConfigureTestNG\\\\ExcelSheet\\\\Aisha.xlsx");
+Workbook WB = WorkbookFactory.create(Login);
+String Username =WB.getSheet("Login").getRow(1).getCell(0).getStringCellValue();
+String Password =WB.getSheet("Login").getRow(1).getCell(1).getStringCellValue();
+System.out.println(Username);
+System.out.println(Password);
+	}
+}
+public class Assignment130 extends Super {
+	public static void main(String[] args) throws InterruptedException, EncryptedDocumentException, IOException {
+		Parent();
+		ChromeDriver driver = new ChromeDriver();
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+		driver.get("https://www.facebook.com/login/");
+		WebElement Email = driver.findElement(By.xpath("//input[@id='email']"));
+		Email.sendKeys(Username);
+		WebElement PSW = driver.findElement(By.xpath("//input[@class='inputtext _55r1 inputtext _9npi inputtext _9npi']"));
+		PSW.sendKeys(Password);
+		Thread.sleep(4000);
+		WebElement signin = driver.findElement(By.xpath("//button[@class='_42ft _4jy0 _52e0 _4jy6 _4jy1 selected _51sy']"));
+		signin.click();
+		driver.quit();}}
+
+
+//Aisha_khan@13
